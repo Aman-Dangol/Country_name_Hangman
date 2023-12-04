@@ -76,8 +76,16 @@ inputBox.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
     userWord = inputBox.value.toLowerCase();
     userWord = userWord.toLowerCase();
-    checkWord();
+    if (userWord.length != 1) {
+      inputBox.placeholder =
+        "invalid input.please only use one letter at a time";
+    } else {
+      checkWord();
+    }
+    inputBox.value=""
+
   }
+
 });
 
 //calling function
