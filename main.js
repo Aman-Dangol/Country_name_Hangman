@@ -32,22 +32,12 @@ function createBlanks() {
     }
   }
 }
-function show() {
-  blank.innerHTML = guessWord;
-}
-
-function checkWord() {
-  if (userWord.toLowerCase() == guessWord.toLowerCase()) {
-    show();
-  } else checkletter();
-}
 
 function checkletter() {
   for (let i = 0; i < userWord.length; i++) {
     for (let j = 0; j < guessWordLength; j++) {
       if (userWord[i] == guessWord[j]) {
         correctLetter = userWord[i];
-        console.log(correctLetter);
         adjustBlock();
       }
     }
@@ -61,7 +51,6 @@ function adjustBlock() {
       blockArray[i] = correctLetter;
     }
   }
-  console.log(blockArray);
 }
 
 function updateBlanks() {
@@ -80,12 +69,11 @@ inputBox.addEventListener("keydown", (e) => {
       inputBox.placeholder =
         "invalid input.please only use one letter at a time";
     } else {
-      checkWord();
+      inputBox.placeholder = "guess country name";
+      checkletter();
     }
-    inputBox.value=""
-
+    inputBox.value = "";
   }
-
 });
 
 //calling function
