@@ -4,14 +4,16 @@ let inputBox = document.getElementById("input");
 let guessWord;
 let guessWordLength;
 let userWord;
+let correctLetter;
+let blockArray = new Array();
 
 //defining functions
 function getword() {
   let num = getRandomNumer(countries.length); //countries.length = 195
-  // guessWord = countries[num];
-  guessWord = "el salvador";
+  guessWord = countries[num].toLowerCase();
   guessWordLength = guessWord.length;
-  console.log(guessWord + " " + guessWordLength);
+  blockArray.length = guessWordLength;
+  console.log(guessWord);
 }
 
 function getRandomNumer(max) {
@@ -19,41 +21,65 @@ function getRandomNumer(max) {
 }
 
 function createBlanks() {
-  for (let i = 0; i < guessWordLength; i++) {
+  blank.innerHTML = "";
+  for (let i = 0; i < blockArray.length; i++) {
     if (guessWord[i] == " ") {
-      console.log("space");
-      blank.innerHTML += "  ";
+      blockArray[i] = " ";
+      blank.innerHTML += blockArray[i];
     } else {
-      blank.innerHTML += "_ ";
+      blockArray[i] = "_";
+      blank.innerHTML += blockArray[i];
     }
   }
 }
-function show(){
-    blank.innerHTML= guessWord;
+function show() {
+  blank.innerHTML = guessWord;
 }
-
 
 function checkWord() {
   if (userWord.toLowerCase() == guessWord.toLowerCase()) {
-    show()
-    console.log("you won!!");
-  }
-  // for (let i = 0; i < guessWordLength; i++) {
-  //     for (let j = 0; j < userWord.length; j++) {
-  //         if(i==j){
-  //             console.log(userWord[j]);
-  //         }
-  //     }
+    show();
+  } else checkletter();
 }
 
-//calling function
-getword();
-createBlanks();
+function checkletter() {
+  for (let i = 0; i < userWord.length; i++) {
+    for (let j = 0; j < guessWordLength; j++) {
+      if (userWord[i] == guessWord[j]) {
+        correctLetter = userWord[i];
+        console.log(correctLetter);
+        adjustBlock();
+      }
+    }
+  }
+  updateBlanks();
+}
+
+function adjustBlock() {
+  for (let i = 0; i < guessWordLength; i++) {
+    if (guessWord[i] == correctLetter) {
+      blockArray[i] = correctLetter;
+    }
+  }
+  console.log(blockArray);
+}
+
+function updateBlanks() {
+  blank.innerHTML = "";
+  for (let i = 0; i < blockArray.length; i++) {
+    blank.innerHTML += blockArray[i];
+  }
+}
 
 //event handler
 inputBox.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
-    userWord = inputBox.value;
+    userWord = inputBox.value.toLowerCase();
+    userWord = userWord.toLowerCase();
     checkWord();
   }
 });
+
+//calling function
+getword();
+createBlanks();
