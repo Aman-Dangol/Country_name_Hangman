@@ -49,6 +49,7 @@ function checkletter() {
   if (!exist) {
     chance--;
     chancesDiv.innerHTML = `chances left ${chance}`;
+    gameOver();
   }
   updateBlanks();
 }
@@ -66,6 +67,7 @@ function updateBlanks() {
   for (let i = 0; i < blockArray.length; i++) {
     blank.innerHTML += blockArray[i];
   }
+  checkWin();
 }
 
 //event handler
@@ -83,6 +85,18 @@ inputBox.addEventListener("keydown", (e) => {
     inputBox.value = "";
   }
 });
+
+function checkWin() {
+  if (guessWord == blockArray.join("")) {
+    console.log("winner");
+  }
+}
+
+function gameOver() {
+  if (chance == 0) {
+    console.log("gameOver");
+  }
+}
 
 //calling function
 getword();
