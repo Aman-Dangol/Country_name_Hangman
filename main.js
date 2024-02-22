@@ -1,11 +1,14 @@
 import { countries } from "./countryName.js";
 let blank = document.querySelector(".blank");
 let inputBox = document.getElementById("input");
+let chancesDiv = document.getElementById("mistakes");
 let guessWord;
 let guessWordLength;
 let userWord;
 let correctLetter;
 let blockArray = new Array();
+let exist = false;
+let chance = 10;
 
 //defining functions
 function getword() {
@@ -37,10 +40,15 @@ function checkletter() {
   for (let i = 0; i < userWord.length; i++) {
     for (let j = 0; j < guessWordLength; j++) {
       if (userWord[i] == guessWord[j]) {
+        exist = true;
         correctLetter = userWord[i];
         adjustBlock();
       }
     }
+  }
+  if (!exist) {
+    chance--;
+    chancesDiv.innerHTML = `chances left ${chance}`;
   }
   updateBlanks();
 }
